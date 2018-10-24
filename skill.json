@@ -1,0 +1,110 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "testdemo",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "LectureContinueIntent",
+                    "slots": [],
+                    "samples": [
+                        "weiter",
+                        "fortfahren",
+                        "Kapitel weiter machen",
+                        "weiter im Kapitel",
+                        "Kapitel fortfahren"
+                    ]
+                },
+                {
+                    "name": "LecturePlayIntent",
+                    "slots": [
+                        {
+                            "name": "Lection",
+                            "type": "CHAPTER"
+                        }
+                    ],
+                    "samples": [
+                        "Kapitel nummer {Lection}",
+                        "{Lection}",
+                        "bestimmtes Kapitel",
+                        "bestimmtes",
+                        "Kapitel {Lection}"
+                    ]
+                },
+                {
+                    "name": "AMAZON.PauseIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ResumeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "HomeIntent",
+                    "slots": [],
+                    "samples": [
+                        "Hauptmenü"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "CHAPTER",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "acht"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sieben"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sechs"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "fünf"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "vier"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "drei"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "zwei"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "eins"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
