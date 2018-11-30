@@ -62,7 +62,7 @@ exports.TEXT = {
   LEARN_MENUE: ', Möchtest du fortfahren oder ein bestimmtes Kapitel hören? ',
   GAME_MENUE: ', Möchtest du fortfahren oder zufällig spielen ',
   BUMM: ' User Daten werden gelöscht..., ... auf Wiederhören! ',
-  ASK_CHAPTER: 'Welches Kapitel?'
+  ASK_CHAPTER: ' Welches Kapitel? '
 }
 
 exports.LOGGING = function (handlerInput) {

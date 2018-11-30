@@ -143,7 +143,7 @@ exports.getChapterQuestions = function (allQuestions, chapter) {
 
 exports.getSong = function (userid, points) {
   points = parseInt(points)
-  if (points > 3) {
+  if (points >= 3) {
     db.removeSongPointsFromUser(userid, 3)
     return config.TEXT.MUSIC3
   } else if (points === 2) {
