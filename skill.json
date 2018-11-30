@@ -1,0 +1,264 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "testdemo",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "LearnIntent",
+                    "slots": [],
+                    "samples": [
+                        "lernen"
+                    ]
+                },
+                {
+                    "name": "HomeIntent",
+                    "slots": [],
+                    "samples": [
+                        "zum Menü",
+                        "Hauptmenü"
+                    ]
+                },
+                {
+                    "name": "SongIntent",
+                    "slots": [],
+                    "samples": [
+                        "song hören",
+                        "lieder abspielen",
+                        "songs",
+                        "musik",
+                        "lieder",
+                        "musik abspielen",
+                        "musik hören",
+                        "lieder hören",
+                        "song abspielen"
+                    ]
+                },
+                {
+                    "name": "GameIntent",
+                    "slots": [
+                        {
+                            "name": "ANSWER",
+                            "type": "ANSWER"
+                        }
+                    ],
+                    "samples": [
+                        "{ANSWER}"
+                    ]
+                },
+                {
+                    "name": "LearnContinueIntent",
+                    "slots": [],
+                    "samples": [
+                        "weiter",
+                        "weiter im kapitel",
+                        "fortfahren"
+                    ]
+                },
+                {
+                    "name": "LearnSelectIntent",
+                    "slots": [
+                        {
+                            "name": "CHAPTER",
+                            "type": "CHAPTER"
+                        }
+                    ],
+                    "samples": [
+                        "kapitel {CHAPTER}",
+                        "bestimmtes kapitel",
+                        "{CHAPTER}",
+                        "bestimmtes"
+                    ]
+                },
+                {
+                    "name": "GameMenueIntent",
+                    "slots": [],
+                    "samples": [
+                        "spielen",
+                        "üben"
+                    ]
+                },
+                {
+                    "name": "GameContinueIntent",
+                    "slots": [],
+                    "samples": [
+                        "fortfahren"
+                    ]
+                },
+                {
+                    "name": "GameRandomIntent",
+                    "slots": [],
+                    "samples": [
+                        "zufällig"
+                    ]
+                },
+                {
+                    "name": "DeleteIntent",
+                    "slots": [],
+                    "samples": [
+                        "Daten löschen",
+                        "Selbstzerstörung"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "CHAPTER",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "acht"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sieben"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sechs"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "fünf"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "vier"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "drei"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "zwei"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "eins"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ANSWER",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "geschlossen"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "offen"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "kurz"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "lang"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "null"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "mitte"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hinten"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "vorne"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "eine"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "zehn"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "neun"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "acht"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sieben"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "sechs"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "fünf"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "vier"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "drei"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "zwei"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "eins"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
