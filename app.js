@@ -314,7 +314,9 @@ const gameIntentHandler = {
         handlerInput.attributesManager.getSessionAttributes().STATE === config.STATES.GAMERANDOM) {
       config.LOGGING(handlerInput)
       handlerInput.attributesManager.getSessionAttributes().STATE = config.STATES.GAME
-      handlerInput.attributesManager.getSessionAttributes().currentquestion = _.sample(handlerInput.attributesManager.getSessionAttributes().questions)
+      handlerInput.attributesManager.getSessionAttributes().round = 1
+      handlerInput.attributesManager.getSessionAttributes().currentquestion = (_.shuffle(handlerInput.attributesManager.getSessionAttributes().questions)).pop()
+      handlerInput.attributesManager.getSessionAttributes().questions = hf.removeItemFromCollection(handlerInput.attributesManager.getSessionAttributes().questions, handlerInput.attributesManager.getSessionAttributes().currentquestion)
       const speechText = handlerInput.attributesManager.getSessionAttributes().currentquestion.text
       return handlerInput.responseBuilder
         .speak(speechText)
@@ -332,22 +334,48 @@ const gameIntentHandler = {
         answer = handlerInput.requestEnvelope.request.intent.slots.CHAPTER.value
       }
 
-      if (handlerInput.attributesManager.getSessionAttributes().currentquestion.answer === answer) {
-        handlerInput.attributesManager.getSessionAttributes().currentquestion = _.sample(handlerInput.attributesManager.getSessionAttributes().questions)
-        db.addPointToUser(handlerInput.requestEnvelope.session.user.userId)
-        const speechText = 'Richtig, ' + handlerInput.attributesManager.getSessionAttributes().currentquestion.text
-        return handlerInput.responseBuilder
-          .speak(speechText)
-          .reprompt(speechText)
-          .getResponse()
+      if (handlerInput.attributesManager.getSessionAttributes().round === 3) {
+        if (handlerInput.attributesManager.getSessionAttributes().currentquestion.answer === answer) {
+          handlerInput.attributesManager.getSessionAttributes().round = handlerInput.attributesManager.getSessionAttributes().round + 1
+          handlerInput.attributesManager.getSessionAttributes().currentquestion = (_.shuffle(handlerInput.attributesManager.getSessionAttributes().questions)).pop()
+          handlerInput.attributesManager.getSessionAttributes().questions = hf.removeItemFromCollection(handlerInput.attributesManager.getSessionAttributes().questions, handlerInput.attributesManager.getSessionAttributes().currentquestion)
+          db.addPointToUser(handlerInput.requestEnvelope.session.user.userId)
+          const speechText = 'Richtig, ' + config.TEXT.GAME_FINISHED
+          return handlerInput.responseBuilder
+            .speak(speechText)
+            .getResponse()
+        } else {
+          handlerInput.attributesManager.getSessionAttributes().round = handlerInput.attributesManager.getSessionAttributes().round + 1
+          handlerInput.attributesManager.getSessionAttributes().currentquestion = (_.shuffle(handlerInput.attributesManager.getSessionAttributes().questions)).pop()
+          handlerInput.attributesManager.getSessionAttributes().questions = hf.removeItemFromCollection(handlerInput.attributesManager.getSessionAttributes().questions, handlerInput.attributesManager.getSessionAttributes().currentquestion)
+          db.removePointFromUser(handlerInput.requestEnvelope.session.user.userId)
+          const speechText = 'Falsch, ' + config.TEXT.GAME_FINISHED
+          return handlerInput.responseBuilder
+            .speak(speechText)
+            .getResponse()
+        }
       } else {
-        handlerInput.attributesManager.getSessionAttributes().currentquestion = _.sample(handlerInput.attributesManager.getSessionAttributes().questions)
-        db.removePointFromUser(handlerInput.requestEnvelope.session.user.userId)
-        const speechText = 'Falsch, ' + handlerInput.attributesManager.getSessionAttributes().currentquestion.text
-        return handlerInput.responseBuilder
-          .speak(speechText)
-          .reprompt(speechText)
-          .getResponse()
+        if (handlerInput.attributesManager.getSessionAttributes().currentquestion.answer === answer) {
+          handlerInput.attributesManager.getSessionAttributes().round = handlerInput.attributesManager.getSessionAttributes().round + 1
+          handlerInput.attributesManager.getSessionAttributes().currentquestion = (_.shuffle(handlerInput.attributesManager.getSessionAttributes().questions)).pop()
+          handlerInput.attributesManager.getSessionAttributes().questions = hf.removeItemFromCollection(handlerInput.attributesManager.getSessionAttributes().questions, handlerInput.attributesManager.getSessionAttributes().currentquestion)
+          db.addPointToUser(handlerInput.requestEnvelope.session.user.userId)
+          const speechText = 'Richtig, ' + handlerInput.attributesManager.getSessionAttributes().currentquestion.text
+          return handlerInput.responseBuilder
+            .speak(speechText)
+            .reprompt(speechText)
+            .getResponse()
+        } else {
+          handlerInput.attributesManager.getSessionAttributes().round = handlerInput.attributesManager.getSessionAttributes().round + 1
+          handlerInput.attributesManager.getSessionAttributes().currentquestion = (_.shuffle(handlerInput.attributesManager.getSessionAttributes().questions)).pop()
+          handlerInput.attributesManager.getSessionAttributes().questions = hf.removeItemFromCollection(handlerInput.attributesManager.getSessionAttributes().questions, handlerInput.attributesManager.getSessionAttributes().currentquestion)
+          db.removePointFromUser(handlerInput.requestEnvelope.session.user.userId)
+          const speechText = 'Falsch, ' + handlerInput.attributesManager.getSessionAttributes().currentquestion.text
+          return handlerInput.responseBuilder
+            .speak(speechText)
+            .reprompt(speechText)
+            .getResponse()
+        }
       }
     }
   }

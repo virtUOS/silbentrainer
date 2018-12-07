@@ -30,13 +30,13 @@ con.connect(function (err) {
 })
 
 exports.addUser = function (userid) {
-  var sql = "SELECT * FROM customers WHERE userid = '" + userid + "'"
+  var sql = "SELECT * FROM customers WHERE userid = '" + con.escapeId(userid) + "'"
   con.query(sql, function (err, result) {
     if (err) throw err
     if (result.length > 0) {
       // console.log('user already exists')
     } else {
-      var sql2 = "INSERT INTO customers (userid, points, chapter) VALUES ('" + userid + "', '0', '0')"
+      var sql2 = "INSERT INTO customers (userid, points, chapter) VALUES ('" + con.escapeId(userid) + "', '0', '0')"
       con.query(sql2, function (err, result) {
         if (err) throw err
         // console.log('new user added')
@@ -47,7 +47,7 @@ exports.addUser = function (userid) {
 
 exports.getPointsFromUser = function (userid) {
   return new Promise((resolve, reject) => {
-    var sql = "SELECT * FROM customers WHERE userid = '" + userid + "'"
+    var sql = "SELECT * FROM customers WHERE userid = '" + con.escapeId(userid) + "'"
     con.query(sql, function (err, result) {
       if (err) reject(err)
       if (result.length > 0) {
@@ -59,7 +59,7 @@ exports.getPointsFromUser = function (userid) {
 
 exports.getChapterFromUser = function (userid) {
   return new Promise((resolve, reject) => {
-    var sql = "SELECT * FROM customers WHERE userid = '" + userid + "'"
+    var sql = "SELECT * FROM customers WHERE userid = '" + con.escapeId(userid) + "'"
     con.query(sql, function (err, result) {
       if (err) reject(err)
       if (result.length > 0) {
@@ -70,11 +70,11 @@ exports.getChapterFromUser = function (userid) {
 }
 
 exports.removeSongPointsFromUser = function (userid, amount) {
-  var sql = "SELECT * FROM customers WHERE userid = '" + userid + "'"
+  var sql = "SELECT * FROM customers WHERE userid = '" + con.escapeId(userid) + "'"
   con.query(sql, function (err, result) {
     if (err) throw err
     let points = result[0].points
-    var sql2 = "UPDATE customers SET points = '" + (parseInt(points) - amount) + "' WHERE userid = '" + userid + "'"
+    var sql2 = "UPDATE customers SET points = '" + con.escape((parseInt(points) - amount)) + "' WHERE userid = '" + con.escapeId(userid) + "'"
     con.query(sql2, function (err, result) {
       if (err) throw err
       // console.log('song points removed')
@@ -84,11 +84,11 @@ exports.removeSongPointsFromUser = function (userid, amount) {
 }
 
 exports.addPointToUser = function (userid) {
-  var sql = "SELECT * FROM customers WHERE userid = '" + userid + "'"
+  var sql = "SELECT * FROM customers WHERE userid = '" + con.escapeId(userid) + "'"
   con.query(sql, function (err, result) {
     if (err) throw err
     let points = result[0].points
-    var sql2 = "UPDATE customers SET points = '" + (parseInt(points) + 1) + "' WHERE userid = '" + userid + "'"
+    var sql2 = "UPDATE customers SET points = '" + con.escape((parseInt(points) + 1)) + "' WHERE userid = '" + con.escapeId(userid) + "'"
     con.query(sql2, function (err, result) {
       if (err) throw err
       // console.log('points added')
@@ -98,11 +98,11 @@ exports.addPointToUser = function (userid) {
 }
 
 exports.removePointFromUser = function (userid) {
-  var sql = "SELECT * FROM customers WHERE userid = '" + userid + "'"
+  var sql = "SELECT * FROM customers WHERE userid = '" + con.escapeId(userid) + "'"
   con.query(sql, function (err, result) {
     if (err) throw err
     let points = result[0].points
-    var sql2 = "UPDATE customers SET points = '" + (parseInt(points) - 1) + "' WHERE userid = '" + userid + "'"
+    var sql2 = "UPDATE customers SET points = '" + con.escape((parseInt(points) - 1)) + "' WHERE userid = '" + con.escapeId(userid) + "'"
     con.query(sql2, function (err, result) {
       if (err) throw err
       // console.log('points removed')
@@ -111,16 +111,8 @@ exports.removePointFromUser = function (userid) {
   })
 }
 
-exports.getUsers = function () {
-  var sql = 'SELECT * FROM customers'
-  con.query(sql, function (err, result, fields) {
-    if (err) throw err
-    // // console.log(result);
-  })
-}
-
 exports.getLection = function (lectureid, callback) {
-  var sql = "SELECT * FROM lectures WHERE lectureid = '" + lectureid + "'"
+  var sql = "SELECT * FROM lectures WHERE lectureid = '" + con.escape(lectureid) + "'"
   con.query(sql, function (err, result) {
     if (err) throw err
     if (result.length > 0) {
@@ -147,7 +139,7 @@ exports.getLectionsByCategory = function (category) {
     if (category === 0 || category === 6 || category === 7 || category === 8) {
       category = 1
     }
-    var sql = 'SELECT * FROM lectures WHERE category = ' + category
+    var sql = 'SELECT * FROM lectures WHERE category = ' + con.escape(category)
     con.query(sql, function (err, result) {
       if (err) reject(err)
       if (result.length > 0) {
@@ -165,7 +157,7 @@ exports.deleteUserData = function () {
 }
 
 exports.addLectureToDatabase = function (lectureid, category, text, answer) {
-  var sql = "INSERT INTO lectures (lectureid, category, text, answer) VALUES ('" + lectureid + "', '" + category + "', '" + text + "', '" + answer + "')"
+  var sql = "INSERT INTO lectures (lectureid, category, text, answer) VALUES ('" + con.escape(lectureid) + "', '" + con.escape(category) + "', '" + con.escape(text) + "', '" + con.escape(answer) + "')"
   con.query(sql, function (err, result) {
     if (err) throw err
     // console.log('new lecture added')
@@ -177,7 +169,7 @@ exports.updateChapter = function (userid, chapter) {
   con.query(sql, function (err, result) {
     if (err) throw err
     // let chapter = result[0].chapter
-    var sql2 = "UPDATE customers SET chapter = '" + (parseInt(chapter)) + "' WHERE userid = '" + userid + "'"
+    var sql2 = "UPDATE customers SET chapter = '" + con.escape((parseInt(chapter))) + "' WHERE userid = '" + con.escapeId(userid) + "'"
     con.query(sql2, function (err, result) {
       if (err) throw err
       // console.log('chapter updated: ' + chapter)

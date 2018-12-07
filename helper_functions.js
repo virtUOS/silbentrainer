@@ -4,8 +4,14 @@ const data = require('./data.js')
 const db = require('./database.js')
 const config = require('./config.js')
 
-exports.getRandomNumber = function (max) {
-  return Math.floor(Math.random() * Math.floor(max))
+exports.removeItemFromCollection = function (collection, item) {
+  let newCollection = []
+  for (var i = 0; i < collection.length; i++) {
+    if (collection[i].lectureid !== item.lectureid) {
+      newCollection.push(collection[i])
+    }
+  }
+  return newCollection
 }
 
 exports.getRightVariation = function () {
@@ -129,16 +135,6 @@ exports.createAllLectures = function () {
   for (var i = 1; i < data.questions.length + 1; i++) {
     db.addLectureToDatabase(i, data.questions[i - 1].category, data.questions[i - 1].text, data.questions[i - 1].answer)
   }
-}
-
-exports.getChapterQuestions = function (allQuestions, chapter) {
-  var arr = []
-  for (var i = 0; i < allQuestions.length; i++) {
-    if (allQuestions[i].category === chapter) {
-      arr.push(allQuestions[i])
-    }
-  }
-  return arr
 }
 
 exports.getSong = function (userid, points) {

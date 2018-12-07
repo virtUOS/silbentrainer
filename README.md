@@ -2,16 +2,14 @@
 ## ALEXA SKILL
 
 ### TODO's
-- Duplikate bei Übungen vermeiden
-- nach 3-4 Fragen stoppen
+#### Major
 - State Management durcheinander!!!
+#### Minor
 - Lied Belohnungssystem überdenken
 - Hilfe Übersicht
 - Erstes Starten, Trailer?
 - nach Kapitel direkt Übungen?
 - weiter und zurück -> Kapitel?
-- SQL Library raussuchen (SQL Injection)
-- unnötige Funktionen löschen
 - Fragen aktuell nur für 5 Kapitel verfügbar
 
 ### INSTALLATION

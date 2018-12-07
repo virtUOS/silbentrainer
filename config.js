@@ -3,7 +3,7 @@ exports.DEBUG = true
 
 // EXAMPLE: 'https://3d5fe997.ngrok.io'
 // IMPORTANT: link without slash
-exports.SERVER = 'https://f05f5bf6.ngrok.io'
+exports.SERVER = 'https://c99ac8dd.ngrok.io'
 exports.PORT = 4567
 
 // ffmpeg -i <input-file> -ac 2 -codec:a libmp3lame -b:a 48k -ar 16000 <output-file.mp3>
@@ -62,7 +62,8 @@ exports.TEXT = {
   LEARN_MENUE: ', Möchtest du fortfahren oder ein bestimmtes Kapitel hören? ',
   GAME_MENUE: ', Möchtest du fortfahren oder zufällig spielen ',
   BUMM: ' User Daten werden gelöscht..., ... auf Wiederhören! ',
-  ASK_CHAPTER: ' Welches Kapitel? '
+  ASK_CHAPTER: ' Welches Kapitel? ',
+  GAME_FINISHED: ' Du hast deine Übungen alle beantwortet. Auf Wiederhören! '
 }
 
 exports.LOGGING = function (handlerInput) {
