@@ -84,9 +84,8 @@ const unhandledHandler = {
 
 const exitIntentHandler = {
   canHandle (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-      (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent' ||
-        handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent')
+    var req = handlerInput.requestEnvelope.request
+    return req.type === 'IntentRequest' && (req.intent.name === 'AMAZON.CancelIntent' || req.intent.name === 'AMAZON.StopIntent')
   },
   handle (handlerInput) {
     config.LOGGING(handlerInput)
@@ -98,8 +97,8 @@ const exitIntentHandler = {
 
 const helpIntentHandler = {
   canHandle (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-      handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent'
+    var req = handlerInput.requestEnvelope.request
+    return req.type === 'IntentRequest' && req.intent.name === 'AMAZON.HelpIntent'
   },
   handle (handlerInput) {
     config.LOGGING(handlerInput)
@@ -112,18 +111,18 @@ const helpIntentHandler = {
 
 const launchRequestHandler = {
   canHandle (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'LaunchRequest' ||
-    (handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-    handlerInput.requestEnvelope.request.intent.name === 'HomeIntent')
+    var req = handlerInput.requestEnvelope.request
+    return req.type === 'LaunchRequest' || (req.type === 'IntentRequest' && req.intent.name === 'HomeIntent')
   },
   handle (handlerInput) {
     var attr = handlerInput.attributesManager.getSessionAttributes()
+    var userId = handlerInput.requestEnvelope.session.user.userId
 
     attr.HISTORY_STATE = ['START']
     attr.HISTORY_INTENT = ['LaunchRequest']
     config.LOGGING(handlerInput)
     attr.STATE = config.STATES.START
-    db.addUser(handlerInput.requestEnvelope.session.user.userId)
+    db.addUser(userId)
     const speechText = config.TEXT.MENUE
     return handlerInput.responseBuilder
       .speak(speechText)
@@ -134,8 +133,8 @@ const launchRequestHandler = {
 
 const learnIntentHandler = {
   canHandle (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-    handlerInput.requestEnvelope.request.intent.name === 'LearnIntent'
+    var req = handlerInput.requestEnvelope.request
+    return req.type === 'IntentRequest' && req.intent.name === 'LearnIntent'
   },
   async handle (handlerInput) {
     var attr = handlerInput.attributesManager.getSessionAttributes()
@@ -156,8 +155,8 @@ const learnIntentHandler = {
 
 const learnContinueIntentHandler = {
   canHandle (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-    handlerInput.requestEnvelope.request.intent.name === 'LearnContinueIntent'
+    var req = handlerInput.requestEnvelope.request
+    return req.type === 'IntentRequest' && req.intent.name === 'LearnContinueIntent'
   },
   async handle (handlerInput) {
     var attr = handlerInput.attributesManager.getSessionAttributes()
@@ -187,22 +186,23 @@ const learnContinueIntentHandler = {
 
 const learnSelectIntentHandler = {
   canHandle (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-    handlerInput.requestEnvelope.request.intent.name === 'LearnSelectIntent'
+    var req = handlerInput.requestEnvelope.request
+    return req.type === 'IntentRequest' && req.intent.name === 'LearnSelectIntent'
   },
   handle (handlerInput) {
     var attr = handlerInput.attributesManager.getSessionAttributes()
     var userId = handlerInput.requestEnvelope.session.user.userId
+    var req = handlerInput.requestEnvelope.request
 
     attr.HISTORY_STATE = attr.HISTORY_STATE.concat(attr.STATE)
     attr.HISTORY_INTENT = attr.HISTORY_INTENT.concat(['LearnSelectIntent'])
     if (attr.STATE === config.STATES.LEARNSELECT) {
       config.LOGGING(handlerInput)
       let stringnumber = 0
-      if (handlerInput.requestEnvelope.request.intent.slots.ANSWER) {
-        stringnumber = handlerInput.requestEnvelope.request.intent.slots.ANSWER.value
+      if (req.intent.slots.ANSWER) {
+        stringnumber = req.intent.slots.ANSWER.value
       } else {
-        stringnumber = handlerInput.requestEnvelope.request.intent.slots.CHAPTER.value
+        stringnumber = req.intent.slots.CHAPTER.value
       }
       const speechText = hf.getNumberToStringValue(stringnumber)
       console.log(hf.getNumberFromStringValue(stringnumber))
@@ -225,8 +225,8 @@ const learnSelectIntentHandler = {
 
 const songIntentHandler = {
   canHandle (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-    handlerInput.requestEnvelope.request.intent.name === 'SongIntent'
+    var req = handlerInput.requestEnvelope.request
+    return req.type === 'IntentRequest' && req.intent.name === 'SongIntent'
   },
   async handle (handlerInput) {
     var attr = handlerInput.attributesManager.getSessionAttributes()
@@ -251,8 +251,8 @@ const songIntentHandler = {
 
 const gameRandomIntentHandler = {
   canHandle (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-      handlerInput.requestEnvelope.request.intent.name === 'GameRandomIntent'
+    var req = handlerInput.requestEnvelope.request
+    return req.type === 'IntentRequest' && req.intent.name === 'GameRandomIntent'
   },
   async handle (handlerInput) {
     var attr = handlerInput.attributesManager.getSessionAttributes()
@@ -268,8 +268,8 @@ const gameRandomIntentHandler = {
 
 const gameContinueIntentHandler = {
   canHandle (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-      handlerInput.requestEnvelope.request.intent.name === 'GameContinueIntent'
+    var req = handlerInput.requestEnvelope.request
+    return req.type === 'IntentRequest' && req.intent.name === 'GameContinueIntent'
   },
   async handle (handlerInput) {
     var attr = handlerInput.attributesManager.getSessionAttributes()
@@ -286,8 +286,8 @@ const gameContinueIntentHandler = {
 
 const gameMenueIntentHandler = {
   canHandle (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-      handlerInput.requestEnvelope.request.intent.name === 'GameMenueIntent'
+    var req = handlerInput.requestEnvelope.request
+    return req.type === 'IntentRequest' && req.intent.name === 'GameMenueIntent'
   },
   async handle (handlerInput) {
     var attr = handlerInput.attributesManager.getSessionAttributes()
@@ -315,12 +315,13 @@ const gameMenueIntentHandler = {
 
 const gameIntentHandler = {
   canHandle (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-      handlerInput.requestEnvelope.request.intent.name === 'GameIntent'
+    var req = handlerInput.requestEnvelope.request
+    return req.type === 'IntentRequest' && req.intent.name === 'GameIntent'
   },
   async handle (handlerInput) {
     var attr = handlerInput.attributesManager.getSessionAttributes()
     var userId = handlerInput.requestEnvelope.session.user.userId
+    var req = handlerInput.requestEnvelope.request
 
     attr.HISTORY_STATE = attr.HISTORY_STATE.concat(attr.STATE)
     attr.HISTORY_INTENT = attr.HISTORY_INTENT.concat(['GameIntent'])
@@ -345,10 +346,10 @@ const gameIntentHandler = {
 
       let answer = null
 
-      if (handlerInput.requestEnvelope.request.intent.slots.ANSWER) {
-        answer = handlerInput.requestEnvelope.request.intent.slots.ANSWER.value
+      if (req.intent.slots.ANSWER) {
+        answer = req.intent.slots.ANSWER.value
       } else {
-        answer = handlerInput.requestEnvelope.request.intent.slots.CHAPTER.value
+        answer = req.intent.slots.CHAPTER.value
       }
 
       if (attr.round === 3) {
@@ -404,8 +405,8 @@ const gameIntentHandler = {
 
 const deleteIntentHandler = {
   canHandle (handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest' &&
-      handlerInput.requestEnvelope.request.intent.name === 'DeleteIntent'
+    var req = handlerInput.requestEnvelope.request
+    return req.type === 'IntentRequest' && req.intent.name === 'DeleteIntent'
   },
   handle (handlerInput) {
     var attr = handlerInput.attributesManager.getSessionAttributes()
